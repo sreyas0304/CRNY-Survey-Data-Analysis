@@ -1,0 +1,60 @@
+LGBTQIAP+ % = COUNTROWS(FILTER(applicant_data, applicant_data[g25_lgbtqiap] = "Yes")) / DISTINCTCOUNT(applicant_data[id]) * 100
+
+
+Immigrants % = COUNTROWS(FILTER(applicant_data, applicant_data[g21_immigrant] = "Yes")) / DISTINCTCOUNT(applicant_data[id]) * 100
+
+
+Deaf/Disabled = COUNTROWS(FILTER(applicant_data, applicant_data[g26_deafdisabled] = "Yes"))
+
+
+Enrolled Candidates = COUNTROWS(FILTER(applicant_data, applicant_data[g_enrollmentstatus] = "Enrolled"))
+
+
+E_Provide Care % = 
+VAR EnrolledCandidates = CALCULATE(COUNTROWS(applicant_data), applicant_data[g_enrollmentstatus] = "Enrolled")
+VAR ProvideCareYes = CALCULATE(COUNTROWS(applicant_data), applicant_data[provide_care_status] = "Yes", applicant_data[g_enrollmentstatus] = "Enrolled")
+RETURN
+DIVIDE(ProvideCareYes, EnrolledCandidates) * 100
+
+
+E_Enrolled % = 
+VAR EnrolledCandidates = CALCULATE(COUNTROWS(applicant_data), applicant_data[g_enrollmentstatus] = "Enrolled")
+VAR BenefitsYes = CALCULATE(COUNTROWS(applicant_data), applicant_data[g32_enrolled] = "Yes", applicant_data[g_enrollmentstatus] = "Enrolled")
+RETURN
+DIVIDE(BenefitsYes, EnrolledCandidates) * 100
+
+
+E_Legal = 
+VAR EnrolledCandidates = CALCULATE(COUNTROWS(applicant_data), applicant_data[g_enrollmentstatus] = "Enrolled")
+VAR LegalYes = CALCULATE(COUNTROWS(applicant_data), applicant_data[g28_criminallegalsystem] = "Yes", applicant_data[g_enrollmentstatus] = "Enrolled")
+RETURN
+LegalYes
+
+
+Impacted by Community = COUNTROWS(FILTER(survey_data, survey_data[p3_impacts] = "Yes"))
+
+
+Edu_Prof_Barriers % = COUNTROWS(FILTER(survey_data, survey_data[p4_barriers] = "Yes")) / DISTINCTCOUNT(survey_data[id]) * 100
+
+
+Carrying Debt % = COUNTROWS(FILTER(survey_data, survey_data[p14_carryingdebt] = "Yes")) / DISTINCTCOUNT(survey_data[id]) * 100
+
+
+Emer_Assist = COUNTROWS(FILTER(survey_data, survey_data[p29_emergencyassist] = "Yes"))
+
+
+Health Insurance % = COUNTROWS(FILTER(survey_data, survey_data[p12_healthinsurance] = "Yes")) / DISTINCTCOUNT(survey_data[id]) * 100
+
+
+Other_Income = COUNTROWS(FILTER(survey_data, survey_data[p11_otherincome] = "Yes"))
+
+
+Health_Agree_Count = 
+CALCULATE (
+    COUNTROWS ( survey_data ),
+    FILTER (
+        survey_data,
+        survey_data[p15_physicalhealth] IN { "Disagree", "Strongly Disagree" } &&
+        survey_data[p16_mentalhealth] IN { "Disagree", "Strongly Disagree" }
+    )
+)
