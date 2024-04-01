@@ -155,6 +155,6 @@ To capture and categorize respondents' caregiving responsibilities. A dictionary
 
 # List of tools/software used: 
 
-Preprocessing: Jupyter Notebook and Python 
+Preprocessing: Jupyter Notebook, Python, SQL 
 
 Visualization: Microsoft’s Power BI  
